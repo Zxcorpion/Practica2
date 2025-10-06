@@ -5,6 +5,10 @@
 #ifndef PRACTICA2_LISTA_H
 #define PRACTICA2_LISTA_H
 
+/**
+ * @brief Definicion de la estructura Lista
+ * @tparam L Tipo de dato de la lista
+ */
 template<typename L>
 class ListaEnlazada {
 private:
@@ -14,27 +18,31 @@ private:
         N dato;
         Nodo *sig;
         Nodo(N &dato, Nodo *sig=0);
-    };
+    }; //Fin clase nodo
     Nodo<L> *cabecera, *cola;
     int tam=0;
+
 public:
     template<typename I>
     class Iterador {
         Nodo<I> *nodo;
     public:
         Iterador(Nodo<I> *_nodo): nodo (_nodo){}
-        bool fin(){return nodo==0;}
-        void siguiente() {
-            nodo=nodo->sig;
+        bool fin() {
+            return nodo==0;
         }
-        I &dato(){return nodo->dato;}
-        I &operator*(){return nodo->dato;}
-    };
+        void siguiente() {
+            nodo = nodo->sig;
+        }
+        I &dato(){ return nodo->dato; }
+        I &operator*(){ return nodo->dato; }
+    }; //Fin clase iterador
+
     ListaEnlazada() : cabecera(0), cola(0), tam(0) {}
     ~ListaEnlazada(){}
     ListaEnlazada(const ListaEnlazada &origen);
     ListaEnlazada &operator=(const ListaEnlazada &origen);
-    Iterador<L> iterador() {return Iterador<L>(cabecera);}
+    Iterador<L> iterador() { return Iterador<L>(cabecera);}
     void insertarinicio(L &dato);
     void insertarFinal(L &dato);
     void insertar(Iterator<L> &i, L &dato);
@@ -55,8 +63,8 @@ template<typename L>
 ListaEnlazada<L> &ListaEnlazada<L>::operator=(const ListaEnlazada<L> &origen) {
     if(cabecera != &origen.cabecera){
         while(cabecera != 0){
-            Nodo<T> aux=cabecera;
-            cabecera=cabecera->sig;
+            Nodo<T> aux = cabecera;
+            cabecera = cabecera->sig;
             delete aux;
         }
         if(origen.cabecera==0) {
@@ -99,6 +107,7 @@ L &ListaEnlazada<L>::fin() {
 template<typename L>
 void ListaEnlazada<L>::insertaInicio(L &dato) {
     Nodo<L> *nuevo = new Nodo<L>(dato, cabecera); //aqui lo que hago es crear el nuevo nodo y ademas hago que apunte al actual primero
+
     if (cabecera == 0) {
         cabecera = nuevo;
         cola = nuevo;
@@ -114,20 +123,44 @@ void ListaEnlazada<L>::insertaInicio(L &dato) {
  */
 template<typename L>
 void ListaEnlazada<L>::insertaFin(L &dato) {
-    Nodo<L> *nuevo = new Nodo<L>(dato, cola); //aqui lo que hago es crear el nuevo nodo y ademas hago que apunte al actual ultimo
-    if (cola == 0) {
-        cola = nuevo;
+    Nodo<L> *nuevo = new Nodo<L>(dato, 0); //aqui lo que hago es crear el nuevo nodo y ademas hago que apunte al actual ultimo
+    if (cola != 0) { //Si la lista no esta vacia, el siguiente a el ultimo es el nuevo
+        cola->sig = nuevo;
+    }
+
+    if (cabecera == 0) {
         cabecera = nuevo;
     }
-    cola = nuevo;
-    tam++;
+        cola = nuevo; //Aqui el nuevo pasa a ser la nueva cola ya que apunta a null
+        tam++;
 }
 
 template<typename L>
 void ListaEnlazada<L>::insertaDetras(Iterador &i, L &dato) {
-    Nodo<L> *nuevo = new Nodo<L>(dato, i->);
+    Nodo<L> *nuevo = new Nodo<L>(dato, i);
 
 }
+
+/**
+ * @brief Metodo que elimina el primer nodo de la lista
+ * @post El primer nodo de la lista es borrado, en caso de que solo hubiera 1 nodo, la cabecera y la cola apuntan al mismo nodo
+ * @throw Se lanza una excepcion si se intenta eliminar un nodo de una lista vacia
+ */
+template<typename L>
+void ListaEnlazada<L>::borrarInicio() {
+    if (cabecera == 0) {
+       throw std::invalid_argument("Error al borrar por el principio, la lista está vacia");
+    }
+    Nodo<L> *borrado = cabecera;
+    cabecera = cabecera->sig;
+    delete borrado;
+
+    if (cabecera == 0) {
+        cola=0;
+    }
+    tam--;
+}
+
 
 
 
