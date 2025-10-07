@@ -4,6 +4,7 @@
 
 #ifndef PRACTICA2_LISTA_H
 #define PRACTICA2_LISTA_H
+#include <stdexcept>
 
 /**
  * @brief Definicion de la estructura Lista
