@@ -52,12 +52,12 @@ public:
     Iterador<L> iterador() {return Iterador<L>(cabecera);}
     void insertarinicio(L &dato);
     void insertarFinal(L &dato);
-    void insertar_delante(Iterador &i, const L &dato);
+    void insertar_delante(Iterador<L> &i, const L &dato);
     void insertarDetras(Iterador<L> &i, const L &dato);
     void borrarInicio();
     void borrarFinal();
-    void borrar(Iterador &i);
-    int get_tam(){return tam;}
+    void borrar(Iterador<L> &i);
+    int get_tam(){ return tam; }
     L &inicio();
     L &final();
     ListaEnlazada<L> concatena(const ListaEnlazada<L> &origen);
@@ -85,7 +85,7 @@ ListaEnlazada<L> &ListaEnlazada<L>::operator=(const ListaEnlazada<L> &origen) {
             tam=0;
         }else {
             cabecera=origen.cabecera;
-            cola=orig.cola;
+            cola=origen.cola;
             tam=origen.tam;
         }
     }
@@ -154,7 +154,7 @@ void ListaEnlazada<L>::insertarFinal(L &dato) {
 }
 
 template<typename L>
-void ListaEnlazada<L>::insertarDetras(Iterador &i, L &dato) {
+void ListaEnlazada<L>::insertarDetras(Iterador<L> &i, const L &dato) {
     Nodo<L> *nuevo = new Nodo<L>(dato, i->sig);
     i->sig=nuevo;
     if(cola==i) {
@@ -163,7 +163,7 @@ void ListaEnlazada<L>::insertarDetras(Iterador &i, L &dato) {
     tam++;
 }
 template<typename L>
-void ListaEnlazada<L>::insertar_delante(Iterador &i, const L &dato) {
+void ListaEnlazada<L>::insertar_delante(Iterador<L> &i, const L &dato) {
     Nodo<L> *nuevo = new Nodo<L>(dato, i);
     if(i==cabecera) {
         cabecera = nuevo;
@@ -225,7 +225,7 @@ void ListaEnlazada<L>::borrarFinal(){
 }
 
 template<typename L>
-void ListaEnlazada<L>::borrar(Iterador &i) {
+void ListaEnlazada<L>::borrar(Iterador<L> &i) {
     Nodo<L> *borrado = 0;
     if(cabecera != cola) {
         borrado=cabecera;
@@ -273,7 +273,16 @@ ListaEnlazada<L> ListaEnlazada<L>::concatena(const ListaEnlazada<L> &origen) {
     return nueva;
 }
 
-
+template<typename L>
+ListaEnlazada<L> ListaEnlazada<L>::operator+(const ListaEnlazada<L> &origen) {
+    this->cola = origen.cabecera;
+    Nodo<L> *aux = origen.cabecera;
+    while(aux->sig != 0) {
+        this->insertarFinal(aux->dato);
+        aux=aux->sig;
+    }
+    return this;
+}
 
 
 
