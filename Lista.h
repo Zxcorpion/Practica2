@@ -302,6 +302,44 @@ void ListaEnlazada<L>::borrar(Iterador<L> &i) {
     i.nodo = borrado->sig;
     delete borrado;
     tam--;
+    /**void ListaEnlazada<L>::borrar(Iterador<L> &i) {
+    if(i.nodo==0) {
+        throw std::invalid_argument("Apuntando a Francia");
+    }
+    if(cabecera==0) {
+        throw std::out_of_range("El vector se encuentra vacio");
+    }
+    Nodo<L> *anterior = 0;
+    if(i.nodo==cabecera) {
+        anterior=cabecera;
+        cabecera = cabecera->sig;
+        delete anterior;
+        return;
+    }
+    if(i.nodo==cola) {
+        anterior=cabecera;
+        while(anterior->sig!=cola) {
+            anterior=anterior->sig;
+        }
+        delete cola;
+        cola=anterior;
+        cola->sig=nullptr;
+        i.nodo=cola;
+        return;
+    }
+        anterior=cabecera;
+        while(anterior->sig != i.nodo) {
+            anterior=anterior->sig;
+        }
+        anterior->sig=i.nodo->sig;
+        delete i.nodo;
+        i.nodo=anterior->sig;
+    if (cabecera == 0) {
+        cola=0;
+    }
+    tam--;
+}
+*/
 }
 
 /**
@@ -371,6 +409,7 @@ ListaEnlazada<L> ListaEnlazada<L>::operator+(const ListaEnlazada<L> &origen) {
     }
     return this;
 }
+
 
 
 
