@@ -1,3 +1,3 @@
-C:/Users/admin/Downloads/Practica2-main(1)/Practica2-main/cmake-build-debug/CMakeFiles/Practica2.dir
-C:/Users/admin/Downloads/Practica2-main(1)/Practica2-main/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/admin/Downloads/Practica2-main(1)/Practica2-main/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/cmake-build-debug/CMakeFiles/Practica2.dir
+C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/cmake-build-debug/CMakeFiles/rebuild_cache.dir

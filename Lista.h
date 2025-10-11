@@ -18,9 +18,9 @@ private:
     public:
         N dato;
         Nodo *sig;
+
         Nodo(N &_dato, Nodo *_sig=0):
-        dato(_dato), sig(_sig)
-        {}
+        dato(_dato), sig(_sig){}
         ~Nodo(){}
     }; //Fin clase nodo
     Nodo<L> *cabecera, *cola;
@@ -39,6 +39,7 @@ public:
         void siguiente() {
             nodo = nodo->sig;
         }
+
         Nodo<L> *get_nodo() const {return nodo;}
         L &dato(){ return nodo->dato; }
         L &operator*(){ return nodo->dato; }
@@ -52,8 +53,8 @@ public:
     Iterador<L> iterador() {return Iterador<L>(cabecera);}
     void insertarinicio(L &dato);
     void insertarFinal(L &dato);
-    void insertar_delante(Iterador<L> &i, const L &dato);
-    void insertarDetras(Iterador<L> &i, const L &dato);
+    void insertar_delante(Iterador<L> &i, L &dato);
+    void insertarDetras(Iterador<L> &i, L &dato);
     void borrarInicio();
     void borrarFinal();
     void borrar(Iterador<L> &i);
@@ -64,13 +65,38 @@ public:
     ListaEnlazada<L> operator+(const ListaEnlazada<L> &origen);
 };
 
+/**
+ * @brief Constructor copia de listas
+ * @param origen Lista sobre la que recogemos los datos a copiar
+ * @return Devuelve una lista nueva con los datos de la de origen
+ * @post Una nueva lista es creada utilizando como datos de inicializacion los de la lista origen
+ */
 template<typename L>
-ListaEnlazada<L>::ListaEnlazada(const ListaEnlazada &origen):
-cabecera(origen.cabecera),
-cola(origen.cola),
-tam(origen.tam)
-{}
+ListaEnlazada<L>::ListaEnlazada(const ListaEnlazada<L> &origen)
+{
+cabecera = 0;
+cola = 0;
+    tam = origen.tam;
+    Nodo<L> *nodo = origen.cabecera;
+    while (nodo != 0) {
+        Nodo<L> *aux = new Nodo<L>(nodo->dato,0);
+        if (cola != 0) {
+            cola->sig = aux;
+        }
+        if (cabecera == 0) {
+            cabecera = aux;
+        }
+        cola = aux;
+        nodo = nodo->sig;
+    }
+}
 
+/**
+ * @brief Operador de asignacion de una lista
+ * @param origen Lista sobre la que recogemos los datos a asignar
+ * @return Un puntero a si mismo para realizar asignacion en cadena
+ * @post La lista sobre la que le asignamos los datos de origen, borra sus datos en caso de que sean distintas, permitiendo la asignacion
+ */
 template<typename L>
 ListaEnlazada<L> &ListaEnlazada<L>::operator=(const ListaEnlazada<L> &origen) {
     if(cabecera != &origen.cabecera){
@@ -153,31 +179,43 @@ void ListaEnlazada<L>::insertarFinal(L &dato) {
         tam++;
 }
 
+/**
+ * @brief Metodo que inserta detras del iterador un nuevo nodo
+ * @param i Iterador
+ * @param dato Dato del nodo a introducir
+ * @post El metodo crea un nuevo nodo con un dato ya establecio, de forma que se coloca justo detras del nodo al que nos referimos con el iterador
+ */
 template<typename L>
-void ListaEnlazada<L>::insertarDetras(Iterador<L> &i, const L &dato) {
-    Nodo<L> *nuevo = new Nodo<L>(dato, i->sig);
-    i->sig=nuevo;
-    if(cola==i) {
+void ListaEnlazada<L>::insertarDetras(Iterador<L> &i, L &dato) {
+    Nodo<L> *nuevo = new Nodo<L>(dato, i.nodo->sig);
+    i.nodo->sig=nuevo;
+    if(cola==i.nodo) {
         cola=nuevo;
     }
     tam++;
 }
+
+/**
+ * @brief Metodo que inserta delante del iterador un nuevo nodo
+ * @param i Iterador
+ * @param dato Dato del nodo a introducir
+ * @post El metodo crea un nuevo nodo con un dato ya establecio, de forma que se coloca justo delante del nodo al que nos referimos con el iterador
+ */
 template<typename L>
-void ListaEnlazada<L>::insertar_delante(Iterador<L> &i, const L &dato) {
-    Nodo<L> *nuevo = new Nodo<L>(dato, i);
-    if(i==cabecera) {
+void ListaEnlazada<L>::insertar_delante(Iterador<L> &i, L &dato) {
+    Nodo<L> *nuevo = new Nodo<L>(dato, i.nodo);
+    if(i.nodo==cabecera) {
         cabecera = nuevo;
-    }
+    }else {
     Nodo<L> *anterior= 0;
-    if(cabecera!=cola) {
         anterior=cabecera;
-        while(anterior->sig !=i) {
-            anterior=anterior->sig;
+        while(anterior->sig != i.nodo) {
+            anterior = anterior->sig;
         }
         anterior->sig=nuevo;
     }
     if(cabecera==0) {
-        cola=cabecera=nuevo;
+        cola = cabecera = nuevo;
     }
     tam++;
 }
@@ -224,19 +262,52 @@ void ListaEnlazada<L>::borrarFinal(){
     tam--;
 }
 
+/**
+ * @brief Metodo que dado un iterador, elimina el nodo
+ * @param i Iterador
+ * @post El metodo elimina un nodo indicado con el iterador, de forma que al ser este borrado, se reajusta la lista
+ */
 template<typename L>
 void ListaEnlazada<L>::borrar(Iterador<L> &i) {
-    Nodo<L> *borrado = 0;
+    if (cabecera == 0) {
+        throw std::invalid_argument("Error al borrar mediante iterador, no se puede borrar un nodo de una lista vacia");
+    }
+    if (i.nodo == 0) {
+        throw std::invalid_argument("Error al borrar mediante iterador, no se puede borrar nullptr");
+
+    }
+
+    if(i.nodo == cabecera) {
+        borrarInicio();
+        return;
+    }
+    if(i.nodo == cola){
+        borrarFinal();
+        return;
+    }
+
+    Nodo<L> *anterior = 0;
     if(cabecera != cola) {
-        borrado=cabecera;
-        while(borrado->sig != i) {
-            borrado=borrado->sig;
+        anterior=cabecera;
+        while(anterior->sig != i.nodo && anterior != 0) {
+            anterior=anterior->sig;
         }
     }
-    borrado->sig=i->sig;
-    delete i;
+    if (anterior == 0 || anterior->sig == 0) {
+        throw std::invalid_argument("Error al borrar mediante iterador, se ha seleccionado un nodo invalido");
+
+    }
+    Nodo<L> *borrado = anterior->sig;
+    anterior->sig = borrado->sig;
+    i.nodo = borrado->sig;
+    delete borrado;
     tam--;
 }
+
+/**
+ * @brief Destructor de la clase lista
+ * @post La lista queda eliminada
+ */
 template<typename L>
 ListaEnlazada<L>::~ListaEnlazada() {
     while(cabecera != 0){
@@ -246,6 +317,10 @@ ListaEnlazada<L>::~ListaEnlazada() {
     }
 }
 
+/**
+ * @brief Metodo que sirve para limpiar la lista
+ * @post La lista queda limpia para un nuevo uso
+ */
 template<typename L>
 void ListaEnlazada<L>::limpia_lista() {
     if(cabecera) {
@@ -257,32 +332,46 @@ void ListaEnlazada<L>::limpia_lista() {
             delete aux;
     }
 }
+
+/**
+ * @brief Metodo que concatena 2 listas
+ * @param origen Lista origen que queremos concatenar
+ * @return Una nueva lista con dos listas concatenadas
+ * @post El metodo crea una nueva lista en la que se encuentran 2 listas concatenadas
+ */
 template<typename L>
 ListaEnlazada<L> ListaEnlazada<L>::concatena(const ListaEnlazada<L> &origen) {
     ListaEnlazada<L> nueva;
     Nodo<L> *aux = cabecera;
-    while(aux->sig != 0) {
+    while(aux != 0) {
         nueva.insertarFinal(aux->dato);
         aux=aux->sig;
     }
     aux=origen.cabecera;
-    while(aux->sig != 0) {
+    while(aux != 0) {
         nueva.insertarFinal(aux->dato);
         aux=aux->sig;
     }
     return nueva;
 }
 
+/**
+ * @brief Operador +
+ * @param origen Lista origen que queremos concatenar
+ * @return Una nueva lista con dos listas concatenadas
+ * @post El metodo crea una nueva lista en la que se encuentran 2 listas concatenadas
+ */
 template<typename L>
 ListaEnlazada<L> ListaEnlazada<L>::operator+(const ListaEnlazada<L> &origen) {
     this->cola = origen.cabecera;
     Nodo<L> *aux = origen.cabecera;
-    while(aux->sig != 0) {
+    while(aux != 0) {
         this->insertarFinal(aux->dato);
         aux=aux->sig;
     }
     return this;
 }
+
 
 
 

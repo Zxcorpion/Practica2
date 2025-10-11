@@ -3,7 +3,7 @@
 //
 
 #include "MediExpress.h"
-
+/*
 void MediExpress::suministrarMed(PaMedicamento pa, Laboratorio l) {
     pa.servidoPor(&l);
 }
@@ -18,3 +18,4 @@ Laboratorio MediExpress::buscarLab(std::string nombreLab) {
     }
     return 0;
 }
+*/

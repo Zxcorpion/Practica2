@@ -1,0 +1,7 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/Practica2.dir/main.cpp.obj: dyndep
+
+build CMakeFiles/Practica2.dir/Laboratorio.cpp.obj: dyndep
+
+build CMakeFiles/Practica2.dir/MediExpress.cpp.obj: dyndep
+

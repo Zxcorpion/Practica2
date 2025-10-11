@@ -22,8 +22,8 @@ public:
 
     void suministrarMed(PaMedicamento pa, Laboratorio l);
     Laboratorio buscarLab(std::string nombreLab);
-
-
+    VDinamico<Laboratorio*> buscarLabCiudad(std::string nombreCiudad);
+    VDinamico<PaMedicamento*> buscaCompuesto(std::string nombrePA);
 };
 
 

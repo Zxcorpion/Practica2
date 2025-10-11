@@ -6,22 +6,32 @@
 	"config" : "Debug",
 	"cxx-modules" : {},
 	"database-info" : null,
-	"dir-cur-bld" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2/cmake-build-debug",
-	"dir-cur-src" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2",
-	"dir-top-bld" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2/cmake-build-debug",
-	"dir-top-src" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2",
+	"dir-cur-bld" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/cmake-build-debug",
+	"dir-cur-src" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main",
+	"dir-top-bld" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/cmake-build-debug",
+	"dir-top-src" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main",
 	"exports" : [],
 	"forward-modules-from-target-dirs" : [],
 	"include-dirs" : [],
 	"language" : "CXX",
 	"linked-target-dirs" : [],
-	"module-dir" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2/cmake-build-debug/CMakeFiles/Practica2.dir",
+	"module-dir" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/cmake-build-debug/CMakeFiles/Practica2.dir",
 	"sources" : 
 	{
+		"CMakeFiles/Practica2.dir/Laboratorio.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/Laboratorio.cpp"
+		},
+		"CMakeFiles/Practica2.dir/MediExpress.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/MediExpress.cpp"
+		},
 		"CMakeFiles/Practica2.dir/main.cpp.obj" : 
 		{
 			"language" : "CXX",
-			"source" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2/main.cpp"
+			"source" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/main.cpp"
 		}
 	}
 }
