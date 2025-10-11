@@ -2,8 +2,8 @@
 // Created by admin on 07/10/2025.
 //
 
-#ifndef PRACTICA2_MEDIEXPRESS_H
-#define PRACTICA2_MEDIEXPRESS_H
+#ifndef PR2MDZPBL_MEDIEXPRESS_H
+#define PR2MDZPBL_MEDIEXPRESS_H
 #include <iostream>
 #include "PaMedicamento.h"
 #include "Laboratorio.h"
@@ -27,4 +27,4 @@ public:
 };
 
 
-#endif //PRACTICA2_MEDIEXPRESS_H
+#endif //PR2MDZPBL_MEDIEXPRESS_H
