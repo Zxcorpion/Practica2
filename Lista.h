@@ -99,21 +99,25 @@ cola = 0;
  */
 template<typename L>
 ListaEnlazada<L> &ListaEnlazada<L>::operator=(const ListaEnlazada<L> &origen) {
-    if(cabecera != &origen.cabecera){
-        while(cabecera != 0){
-            Nodo<L> *aux = cabecera;
-            cabecera = cabecera->sig;
-            delete aux;
+    if(origen.cabecera != cabecera){
+            limpia_lista();
+
+        Nodo<L> *nodo = origen.cabecera;
+        cola=0;
+        cabecera=0;
+        tam=origen.tam;
+
+        while (nodo) {
+            Nodo<L> *nuevo = new Nodo<L>(nodo->dato,0);
+            if (cola != 0) {
+                cola->sig = nuevo;
+            }
+            if (cabecera == 0) {
+                cabecera = cola = nodo;
+                nodo = nodo->sig;
+            }
         }
-        if(origen.cabecera==0) {
-            cola=0;
-            cabecera=0;
-            tam=0;
-        }else {
-            cabecera=origen.cabecera;
-            cola=origen.cola;
-            tam=origen.tam;
-        }
+
     }
     return *this;
 }
@@ -302,42 +306,43 @@ void ListaEnlazada<L>::borrar(Iterador<L> &i) {
     i.nodo = borrado->sig;
     delete borrado;
     tam--;
+
     /**void ListaEnlazada<L>::borrar(Iterador<L> &i) {
-    if(i.nodo==0) {
-        throw std::invalid_argument("Apuntando a Francia");
-    }
-    if(cabecera==0) {
-        throw std::out_of_range("El vector se encuentra vacio");
-    }
-    Nodo<L> *anterior = 0;
-    if(i.nodo==cabecera) {
-        anterior=cabecera;
-        cabecera = cabecera->sig;
-        delete anterior;
-        return;
-    }
-    if(i.nodo==cola) {
-        anterior=cabecera;
-        while(anterior->sig!=cola) {
-            anterior=anterior->sig;
-        }
-        delete cola;
-        cola=anterior;
-        cola->sig=nullptr;
-        i.nodo=cola;
-        return;
-    }
-        anterior=cabecera;
-        while(anterior->sig != i.nodo) {
-            anterior=anterior->sig;
-        }
-        anterior->sig=i.nodo->sig;
-        delete i.nodo;
-        i.nodo=anterior->sig;
-    if (cabecera == 0) {
-        cola=0;
-    }
-    tam--;
+   if(i.nodo==0) {
+       throw std::invalid_argument("Apuntando a Francia");
+   }
+   if(cabecera==0) {
+       throw std::out_of_range("El vector se encuentra vacio");
+   }
+   Nodo<L> *anterior = 0;
+   if(i.nodo==cabecera) {
+       anterior=cabecera;
+       cabecera = cabecera->sig;
+       delete anterior;
+       return;
+   }
+   if(i.nodo==cola) {
+       anterior=cabecera;
+       while(anterior->sig!=cola) {
+           anterior=anterior->sig;
+       }
+       delete cola;
+       cola=anterior;
+       cola->sig=nullptr;
+       i.nodo=cola;
+       return;
+   }
+       anterior=cabecera;
+       while(anterior->sig != i.nodo) {
+           anterior=anterior->sig;
+       }
+       anterior->sig=i.nodo->sig;
+       delete i.nodo;
+       i.nodo=anterior->sig;
+   if (cabecera == 0) {
+       cola=0;
+   }
+   tam--;
 }
 */
 }
@@ -361,14 +366,17 @@ ListaEnlazada<L>::~ListaEnlazada() {
  */
 template<typename L>
 void ListaEnlazada<L>::limpia_lista() {
-    if(cabecera) {
+    if(cabecera == 0) {
         throw std::invalid_argument("No hay nada que limpiar");
     }
+    Nodo<L> *aux = 0;
         while(cabecera != 0){
-            Nodo<L> *aux = cabecera;
+            aux = cabecera;
             cabecera = cabecera->sig;
             delete aux;
     }
+    cola = 0;
+    tam=0;
 }
 
 /**
@@ -409,7 +417,6 @@ ListaEnlazada<L> ListaEnlazada<L>::operator+(const ListaEnlazada<L> &origen) {
     }
     return this;
 }
-
 
 
 

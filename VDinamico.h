@@ -1,7 +1,6 @@
 
-
-#ifndef PRACTICA_1_VDINAMICO_H
-#define PRACTICA_1_VDINAMICO_H
+#ifndef PRACTICA2_VDINAMICO_H
+#define PRACTICA2_VDINAMICO_H
 #include <limits.h>
 #include <algorithm>
 #include <stdexcept>
@@ -272,4 +271,5 @@ int VDinamico<T>::busquedaBinaria(T &d) {
 }
 
 
-#endif //PRACTICA_1_VDINAMICO_H
+
+#endif //PRACTICA2_VDINAMICO_H

@@ -1,5 +1,3 @@
-
-
 #include "PaMedicamento.h"
 /**
  * @brief Constructor por defecto y parametrizado

@@ -10,4 +10,9 @@ add_executable(Practica2 main.cpp
         Laboratorio.cpp
         Laboratorio.h
         MediExpress.cpp
-        MediExpress.h)
+        MediExpress.h
+        MediExpress.cpp
+        MediExpress.h
+        PaMedicamento.cpp
+        PaMedicamento.h
+        VDinamico.h)

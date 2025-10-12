@@ -2,6 +2,7 @@
 #include "Lista.h"
 #include "VDinamico.h"
 #include "Laboratorio.h"
+#include "MediExpress.h"
 #include "PaMedicamento.h"
 
 void mostrarLista(ListaEnlazada<int> &l) {
@@ -63,5 +64,17 @@ int main() {
     }
     mostrarLista(listaEnteros);
 
+    //Parte 2
+    MediExpress mediexpress("../pa_medicamentos.csv","../lab2.csv");
+    int tam = 0;
+    ListaEnlazada<Laboratorio>::Iterador<Laboratorio> itLaboratorio = mediexpress.get_labs().iterador();
+    /*
+    while (!itLaboratorio.fin() && tam +1 < mediexpress.get_medication().tamlog_()) {
+        mediexpress.suministrarMed(mediexpress.get_medication()[tam],itLaboratorio.dato());
+        mediexpress.suministrarMed(mediexpress.get_medication()[tam+1],itLaboratorio.dato());
+        tam+=2;
+        itLaboratorio.siguiente();
+    }
+*/
     return 0;
 }

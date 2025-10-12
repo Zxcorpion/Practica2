@@ -28,6 +28,11 @@
 			"language" : "CXX",
 			"source" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/MediExpress.cpp"
 		},
+		"CMakeFiles/Practica2.dir/PaMedicamento.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/PaMedicamento.cpp"
+		},
 		"CMakeFiles/Practica2.dir/main.cpp.obj" : 
 		{
 			"language" : "CXX",
