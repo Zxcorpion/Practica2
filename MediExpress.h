@@ -1,9 +1,12 @@
 //
-// Created by admin on 07/10/2025.
+// Created by marco on 11/10/2025.
 //
 
-#ifndef PR2MDZPBL_MEDIEXPRESS_H
-#define PR2MDZPBL_MEDIEXPRESS_H
+#ifndef MEDIEXPRESS_H
+#define MEDIEXPRESS_H
+
+
+
 #include <iostream>
 #include "PaMedicamento.h"
 #include "Laboratorio.h"
@@ -19,12 +22,13 @@ public:
     MediExpress();
     MediExpress(const MediExpress &orig);
     ~MediExpress();
-
-    void suministrarMed(PaMedicamento pa, Laboratorio l);
-    Laboratorio buscarLab(std::string nombreLab);
-    VDinamico<Laboratorio*> buscarLabCiudad(std::string nombreCiudad);
+    MediExpress& operator=(const MediExpress &orig);
+    void suministrarMed(PaMedicamento pa,Laboratorio l);
+    Laboratorio buscarLab(const std::string &nombreLab);
+    VDinamico<Laboratorio*> buscarLabCiudad(const std::string &nombreCiudad);
     VDinamico<PaMedicamento*> buscaCompuesto(std::string nombrePA);
 };
 
 
-#endif //PR2MDZPBL_MEDIEXPRESS_H
+
+#endif //MEDIEXPRESS_H
