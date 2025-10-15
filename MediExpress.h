@@ -24,15 +24,15 @@ public:
 
     MediExpress& operator=(const MediExpress &orig);
 
-    VDinamico<PaMedicamento> get_medication() const;
+
     void set_medication(const VDinamico<PaMedicamento> &medication);
-    ListaEnlazada<Laboratorio> get_labs() const;
     void set_labs(const ListaEnlazada<Laboratorio> &labs);
 
-    void suministrarMed(PaMedicamento pa,Laboratorio l);
-    Laboratorio buscarLab(const std::string &nombreLab);
+    void suministrarMed(PaMedicamento *pa,Laboratorio *l);
+    Laboratorio *buscarLab(const std::string &nombreLab);
     VDinamico<Laboratorio*> buscarLabCiudad(const std::string &nombreCiudad);
-    VDinamico<PaMedicamento*> buscaCompuesto(std::string nombrePA);
+    VDinamico<PaMedicamento*> buscaCompuesto(const std::string &nombrePA);
+    VDinamico<PaMedicamento*> getMedicamentoSinLab();
 };
 
 

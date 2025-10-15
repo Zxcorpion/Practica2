@@ -66,15 +66,21 @@ int main() {
 
     //Parte 2
     MediExpress mediexpress("../pa_medicamentos.csv","../lab2.csv");
-    int tam = 0;
-    ListaEnlazada<Laboratorio>::Iterador<Laboratorio> itLaboratorio = mediexpress.get_labs().iterador();
-    /*
-    while (!itLaboratorio.fin() && tam +1 < mediexpress.get_medication().tamlog_()) {
-        mediexpress.suministrarMed(mediexpress.get_medication()[tam],itLaboratorio.dato());
-        mediexpress.suministrarMed(mediexpress.get_medication()[tam+1],itLaboratorio.dato());
-        tam+=2;
-        itLaboratorio.siguiente();
+    VDinamico<Laboratorio *> labsGranada =mediexpress.buscarLabCiudad("Granada");
+    for (int i=0;i<labsGranada.tamlog_();i++) {
+        std::cout<<labsGranada[i]->getNomrbeLab()<<" "<<std::endl;
     }
-*/
+    VDinamico<Laboratorio *> labsJaen =mediexpress.buscarLabCiudad("Jaén");
+    std::cout<<"En Jaen hay "<<labsJaen.tamlog_()<<" laboratorios"<<std::endl;
+    VDinamico<Laboratorio *> labsMadrid =mediexpress.buscarLabCiudad("Madrid");
+    std::cout<<"En Madrid hay "<<labsMadrid.tamlog_()<<" laboratorios y estos son: "<<std::endl;
+    for (int i=0;i<10;i++) {
+        std::cout<<labsMadrid[i]->getNomrbeLab()<<" "<<std::endl;
+    }
+    VDinamico<PaMedicamento*> labsAceite= mediexpress.buscaCompuesto("ACEITE");
+    for (int i = 0; i < labsAceite.tamlog_(); i++) {
+        std::cout<<"Los laboratorios cuyos principios activos poseen aceite son: "<<labsAceite[i]->getServe()->getNomrbeLab()<<" que tiene : "<<labsAceite[i]->get_nombre()<<std::endl;
+    }
+
     return 0;
 }

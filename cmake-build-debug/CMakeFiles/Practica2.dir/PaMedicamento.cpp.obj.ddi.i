@@ -41692,7 +41692,7 @@ public:
 
     Laboratorio *getServe() const;
 
-    void servidoPor(Laboratorio *serve);
+    void servidoPor(Laboratorio *serve_);
 
     PaMedicamento &operator=(const PaMedicamento &orig);
     bool operator<(const PaMedicamento &orig) const;
@@ -41817,6 +41817,6 @@ Laboratorio *PaMedicamento::getServe() const {
     return serve;
 }
 
-void PaMedicamento::servidoPor(Laboratorio *serve) {
-    PaMedicamento::serve = serve;
+void PaMedicamento::servidoPor(Laboratorio *serve_) {
+    this->serve = serve_;
 }

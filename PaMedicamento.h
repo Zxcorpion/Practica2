@@ -32,7 +32,7 @@ public:
 
     Laboratorio *getServe() const;
 
-    void servidoPor(Laboratorio *serve);
+    void servidoPor(Laboratorio *serve_);
 
     PaMedicamento &operator=(const PaMedicamento &orig);
     bool operator<(const PaMedicamento &orig) const;

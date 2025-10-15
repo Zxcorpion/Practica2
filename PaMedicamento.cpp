@@ -117,6 +117,6 @@ Laboratorio *PaMedicamento::getServe() const {
     return serve;
 }
 
-void PaMedicamento::servidoPor(Laboratorio *serve) {
-    PaMedicamento::serve = serve;
+void PaMedicamento::servidoPor(Laboratorio *serve_) {
+    this->serve = serve_;
 }

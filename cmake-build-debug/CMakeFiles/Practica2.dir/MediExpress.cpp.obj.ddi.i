@@ -45606,7 +45606,7 @@ public:
 
     Laboratorio *getServe() const;
 
-    void servidoPor(Laboratorio *serve);
+    void servidoPor(Laboratorio *serve_);
 
     PaMedicamento &operator=(const PaMedicamento &orig);
     bool operator<(const PaMedicamento &orig) const;
@@ -64624,15 +64624,15 @@ public:
 
     MediExpress& operator=(const MediExpress &orig);
 
-    VDinamico<PaMedicamento> get_medication() const;
+
     void set_medication(const VDinamico<PaMedicamento> &medication);
-    ListaEnlazada<Laboratorio> get_labs() const;
     void set_labs(const ListaEnlazada<Laboratorio> &labs);
 
-    void suministrarMed(PaMedicamento pa,Laboratorio l);
-    Laboratorio buscarLab(const std::string &nombreLab);
+    void suministrarMed(PaMedicamento *pa,Laboratorio *l);
+    Laboratorio *buscarLab(const std::string &nombreLab);
     VDinamico<Laboratorio*> buscarLabCiudad(const std::string &nombreCiudad);
-    VDinamico<PaMedicamento*> buscaCompuesto(std::string nombrePA);
+    VDinamico<PaMedicamento*> buscaCompuesto(const std::string &nombrePA);
+    VDinamico<PaMedicamento*> getMedicamentoSinLab();
 };
 # 2 "C:/Users/pablo/Downloads/Segundo Curso/Estructuras/Practicas/Practica2-main/MediExpress.cpp" 2
 MediExpress::MediExpress():
@@ -64774,7 +64774,21 @@ MediExpress::MediExpress(const std::string &medicamentos, const std::string &lab
         std::cout << "Error de apertura en archivo" << std::endl;
     }
 
-    std::cout << std::endl;
+
+
+    ListaEnlazada<Laboratorio>::Iterador<Laboratorio> itLaboratorio = labs.iterador();
+    int tam = 0;
+
+    while (!itLaboratorio.fin() && tam +1 < medication.tamlog_()) {
+        this->suministrarMed(&medication[tam],&itLaboratorio.dato());
+        this->suministrarMed(&medication[tam+1],&itLaboratorio.dato());
+        tam+=2;
+        itLaboratorio.siguiente();
+    }
+
+
+
+
 }
 
 MediExpress::MediExpress(const MediExpress &orig):
@@ -64789,17 +64803,12 @@ MediExpress &MediExpress::operator=(const MediExpress &orig) {
     return *this;
 }
 
-VDinamico<PaMedicamento> MediExpress::get_medication() const {
-    return medication;
-}
 
 void MediExpress::set_medication(const VDinamico<PaMedicamento> &medication) {
     this->medication = medication;
 }
 
-ListaEnlazada<Laboratorio> MediExpress::get_labs() const {
-    return labs;
-}
+
 
 void MediExpress::set_labs(const ListaEnlazada<Laboratorio> &labs) {
     this->labs = labs;
@@ -64808,15 +64817,15 @@ void MediExpress::set_labs(const ListaEnlazada<Laboratorio> &labs) {
 MediExpress::~MediExpress() {
 }
 
-void MediExpress::suministrarMed(PaMedicamento pa, Laboratorio l) {
-    pa.servidoPor(&l);
+void MediExpress::suministrarMed(PaMedicamento *pa, Laboratorio *l) {
+    pa->servidoPor(l);
 }
 
-Laboratorio MediExpress::buscarLab(const std::string &nombreLab) {
+Laboratorio *MediExpress::buscarLab(const std::string &nombreLab) {
     ListaEnlazada<Laboratorio>::Iterador<Laboratorio> aux=labs.iterador();
     for(int i = 0; i < labs.get_tam(); i++){
         if(aux.dato().getNomrbeLab().find(nombreLab) != std::string::npos){
-            return aux.dato();
+            return &aux.dato();
         }else{
             aux.siguiente();
         }
@@ -64834,7 +64843,7 @@ VDinamico<Laboratorio*> MediExpress::buscarLabCiudad(const std::string &nombreCi
     }
     return vector;
 }
-VDinamico<PaMedicamento*> MediExpress::buscaCompuesto(std::string nombrePA) {
+VDinamico<PaMedicamento*> MediExpress::buscaCompuesto(const std::string &nombrePA) {
     VDinamico<PaMedicamento*>auxiliar;
     for(unsigned int i=0;i<medication.tamlog_();i++) {
         if(medication[i].get_nombre().find(nombrePA) != std::string::npos) {
@@ -64842,4 +64851,13 @@ VDinamico<PaMedicamento*> MediExpress::buscaCompuesto(std::string nombrePA) {
         }
     }
     return auxiliar;
+}
+
+VDinamico<PaMedicamento*> MediExpress::getMedicamentoSinLab() {
+    VDinamico<PaMedicamento*> aux;
+    for (int i=0;i< medication.tamlog_();i++) {
+        if (!medication[i].getServe())
+        aux.insertar(&medication[i]);
+    }
+    return aux;
 }
