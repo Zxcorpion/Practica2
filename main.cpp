@@ -13,7 +13,10 @@ void mostrarLista(ListaEnlazada<int> &l) {
     }
 }
 
-
+/**
+ * @author Pablo Rodriguez Gniadek prg00054@red.ujaen.es
+ * @author Marco Diaz Vera mdv00011@red.ujaen.es
+ */
 int main() {
     ListaEnlazada<int> listaEnteros;
     for (int i = 101; i <= 200; i++){
@@ -80,6 +83,11 @@ int main() {
     VDinamico<PaMedicamento*> labsAceite= mediexpress.buscaCompuesto("ACEITE");
     for (int i = 0; i < labsAceite.tamlog_(); i++) {
         std::cout<<"Los laboratorios cuyos principios activos poseen aceite son: "<<labsAceite[i]->getServe()->getNomrbeLab()<<" que tiene : "<<labsAceite[i]->get_nombre()<<std::endl;
+    }
+
+    VDinamico<PaMedicamento*> labsSin = mediexpress.getMedicamentoSinLab();
+    for (int i = 0; i < 152; i++) {
+        labsSin[i]->servidoPor(labsMadrid[i]);
     }
 
     return 0;

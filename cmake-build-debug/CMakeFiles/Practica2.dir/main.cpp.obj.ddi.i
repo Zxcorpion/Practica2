@@ -64720,5 +64720,10 @@ int main() {
         std::cout<<"Los laboratorios cuyos principios activos poseen aceite son: "<<labsAceite[i]->getServe()->getNomrbeLab()<<" que tiene : "<<labsAceite[i]->get_nombre()<<std::endl;
     }
 
+    VDinamico<PaMedicamento*> labsSin = mediexpress.getMedicamentoSinLab();
+    for (int i = 0; i < 152; i++) {
+        labsSin[i]->servidoPor(labsMadrid[i]);
+    }
+
     return 0;
 }
