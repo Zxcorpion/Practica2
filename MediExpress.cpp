@@ -1,8 +1,19 @@
 #include "MediExpress.h"
+
+/**
+ * @brief Constructor por defecto de la clase MediExpress
+ * @post Se crea un objeto con los valores asignados por defecto
+ */
 MediExpress::MediExpress():
 medication(),labs()
 {}
 
+/**
+ * @brief Constructor parametrizado de la clase MediExpress
+ * @param medicamentos pasados por referencia
+ * @param laboratorios pasador por referencia
+ * @post Se crea un objeto de la clase MediExpress con los valores pasados por cabecera
+ */
 MediExpress::MediExpress(const std::string &medicamentos, const std::string &laboratorios) {
     std::ifstream is;
     std::stringstream  columnas;
@@ -130,7 +141,6 @@ MediExpress::MediExpress(const std::string &medicamentos, const std::string &lab
         std::cout << "Error de apertura en archivo" << std::endl;
     }
 
-
     //Insertar
     ListaEnlazada<Laboratorio>::Iterador<Laboratorio> itLaboratorio = labs.iterador();
     int tam = 0;
@@ -140,17 +150,32 @@ MediExpress::MediExpress(const std::string &medicamentos, const std::string &lab
         this->suministrarMed(&medication[tam+1],&itLaboratorio.dato());
         tam+=2;
         itLaboratorio.siguiente();
-    }/*
-    for (int i=0;i<3158;i++) {
-        std::cout<<medication[i].getServe()->getNomrbeLab()<<std::endl;
     }
-    */
+    int cont=0;
+    for (int i=0; i<medication.tamlog_(); i++){
+        if (medication[i].getServe())
+            std::cout << "PaMedicamento:" << medication[i].get_id_num()<<
+                "Labor.: " << medication[i].getServe()->getId() << std::endl;
+        else
+            cont++;
+    }
+    std::cout << "Medicamentos sin asignar: " << cont << std::endl;
 }
 
+/**
+ * @brief Constructor de copia de la clase MediExpress
+ * @param orig objeto que vamos a copiar
+ * @post Se crea un objeto de la clase MediExpress copiando el objeto pasado por cabecera
+ */
 MediExpress::MediExpress(const MediExpress &orig):
 medication(orig.medication),labs(orig.labs)
 {}
-
+/**
+ * @brief Operador de igualacion
+ * @param orig objeto de la clase MediExpress del que quieren coger los datos
+ * @return Devuelve *this ya modificado o no
+ * @post El metodo asigna los mismos valores del objeto pasado por cabecera
+ */
 MediExpress &MediExpress::operator=(const MediExpress &orig) {
     if(this!=&orig) {
         medication = orig.medication;
@@ -159,24 +184,47 @@ MediExpress &MediExpress::operator=(const MediExpress &orig) {
     return *this;
 }
 
-
+/**
+ * @brief Funcion para establecer un valor al atributo medication
+ * @param medication valor que queremos asignar a medication
+ * @post El atributo medication es modificado por un nuevo valor
+ */
 void MediExpress::set_medication(const VDinamico<PaMedicamento> &medication) {
     this->medication = medication;
 }
 
 
-
+/**
+ * @brief Funcion para establecer un valor al atributo labs
+ * @param labs valor que queremos asignar a nuestro atributo labs
+ * @post El atributo labs es modificado por un nuevo valor
+ */
 void MediExpress::set_labs(const ListaEnlazada<Laboratorio> &labs) {
     this->labs = labs;
 }
 
+/**
+ * @brief Destructor de los objetos MediExpress
+ * @post Se libera la memoria
+ */
 MediExpress::~MediExpress() {
 }
 
+/**
+ * @brief Funcion para asociar un laboratorio a un medicamento
+ * @param pa Puntero de Pamedicamento
+ * @param l Puntero de Laboratorio
+ * @post PaMedicamento pasado por cabecera es asociado con un laboratorio
+ */
 void MediExpress::suministrarMed(PaMedicamento *pa, Laboratorio *l) {
     pa->servidoPor(l);
 }
 
+/**
+ * @brief Funcion para buscar un laboratorio
+ * @param nombreLab pasado por referencia
+ * @return &aux.dato si se ha encontrado el laboratorio o 0 si no se ha encontrado
+ */
 Laboratorio *MediExpress::buscarLab(const std::string &nombreLab) {
     ListaEnlazada<Laboratorio>::Iterador<Laboratorio> aux=labs.iterador();
     for(int i = 0; i < labs.get_tam(); i++){
@@ -188,6 +236,12 @@ Laboratorio *MediExpress::buscarLab(const std::string &nombreLab) {
     }
     return 0;
 }
+
+/**
+ * @brief Funcion para buscar laboratorios de una ciudad
+ * @param nombreCiudad pasada por referencia
+ * @return vector con los laboratorios que se encuentran en la ciudad pasada por cabecera
+ */
 VDinamico<Laboratorio*> MediExpress::buscarLabCiudad(const std::string &nombreCiudad) {
     VDinamico<Laboratorio*> vector;
     ListaEnlazada<Laboratorio>::Iterador<Laboratorio> aux=labs.iterador();
@@ -199,6 +253,13 @@ VDinamico<Laboratorio*> MediExpress::buscarLabCiudad(const std::string &nombreCi
     }
     return vector;
 }
+
+/**
+ * @brief Funcion para buscar compuestos en un vector dinamico de PaMedicamento
+ * @param nombrePA  pasado por referencia
+ * @return vector con los medicamentos que contienen el nombre pasado por referencia
+ * @post se crea un vector auxiliar y se inserta en el lo medicametnos convenientes
+ */
 VDinamico<PaMedicamento*> MediExpress::buscaCompuesto(const std::string &nombrePA) {
     VDinamico<PaMedicamento*>auxiliar;
     for(unsigned int i=0;i<medication.tamlog_();i++) {
@@ -209,6 +270,11 @@ VDinamico<PaMedicamento*> MediExpress::buscaCompuesto(const std::string &nombreP
     return auxiliar;
 }
 
+/**
+ * @brief Funcion para leer un vector de medicamentos que no tienen asociados un laboratorio
+ * @return aux, vector con todos los medicamentos sin laboratorio asociado
+ * @post se crea y se modifica un vector con medicamentos dentro del él
+ */
 VDinamico<PaMedicamento*> MediExpress::getMedicamentoSinLab() {
     VDinamico<PaMedicamento*> aux;
     for (int i=0;i< medication.tamlog_();i++) {
@@ -216,4 +282,34 @@ VDinamico<PaMedicamento*> MediExpress::getMedicamentoSinLab() {
         aux.insertar(&medication[i]);
     }
     return aux;
+}
+
+/**
+ * @brief Funcion para borrar laboratorios de forma correcta
+ * @param nombreCiudad pasado por referencia
+ * @post se borran todos los medicamentos que coinciden con el nombre pasado por referencia y desenlaza el laboratorio de sus medicamentos
+ */
+void MediExpress::borrarLaboratorio(const std::string &nombreCiudad) {
+    ListaEnlazada<Laboratorio>::Iterador<Laboratorio> encontrado=labs.iterador();
+    ListaEnlazada<Laboratorio>::Iterador<Laboratorio> aux;
+    int cont=0;
+    for(int i=0;i<medication.tamlog_();i++) {
+        if(medication[i].getServe() !=nullptr && medication[i].getServe()->getLocalidad().find(nombreCiudad) != std::string::npos) {
+            medication[i].servidoPor(nullptr);
+        }else {
+            cont++;
+        }
+    }
+    if(cont==medication.tamlog_()) {
+        throw std::invalid_argument("Error al localizar la localidad");
+    }
+    while(!encontrado.fin()) {
+        if(encontrado.dato().getLocalidad().find(nombreCiudad) != std::string::npos) {
+            aux=encontrado;
+            aux.siguiente();
+            labs.borrar(encontrado);
+            encontrado=aux;
+        }else
+            encontrado.siguiente();
+    }
 }

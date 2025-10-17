@@ -13,10 +13,7 @@ void mostrarLista(ListaEnlazada<int> &l) {
     }
 }
 
-/**
- * @author Pablo Rodriguez Gniadek prg00054@red.ujaen.es
- * @author Marco Diaz Vera mdv00011@red.ujaen.es
- */
+
 int main() {
     ListaEnlazada<int> listaEnteros;
     for (int i = 101; i <= 200; i++){
@@ -84,11 +81,17 @@ int main() {
     for (int i = 0; i < labsAceite.tamlog_(); i++) {
         std::cout<<"Los laboratorios cuyos principios activos poseen aceite son: "<<labsAceite[i]->getServe()->getNomrbeLab()<<" que tiene : "<<labsAceite[i]->get_nombre()<<std::endl;
     }
-
     VDinamico<PaMedicamento*> labsSin = mediexpress.getMedicamentoSinLab();
-    for (int i = 0; i < 152; i++) {
+    for (int i = 0; i < labsSin.tamlog_(); i++) {
         labsSin[i]->servidoPor(labsMadrid[i]);
     }
+    try {
+        mediexpress.borrarLaboratorio("Bruselas");
+    }catch (std::invalid_argument& e) {
+        std::cerr<<e.what()<<std::endl;
+    }
+    VDinamico<Laboratorio*> labsBruselas=mediexpress.buscarLabCiudad("Bruselas");
+        std::cout<<"En Bruselas hay: "<<labsBruselas.tamlog_()<<" Laboratorios."<<std::endl;
 
     return 0;
 }

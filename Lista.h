@@ -125,11 +125,12 @@ ListaEnlazada<L> &ListaEnlazada<L>::operator=(const ListaEnlazada<L> &origen) {
 /**
  * @brief Metodo que devuelve el dato del primer elemento de la lista
  * @return Dato al inicio de la lista
+ * @throw std::invalid_argument Se lanza una excepcion si la lista esta vacia
  */
 template<typename L>
 L &ListaEnlazada<L>::inicio() {
     if(cabecera==nullptr) {
-        throw std::invalid_argument("Cabecera no existe");
+        throw std::invalid_argument("Error al acceder al primer elemento de la lista");
     }
     Iterador<L> i= cabecera;
     return i.dato();
@@ -137,6 +138,7 @@ L &ListaEnlazada<L>::inicio() {
 /**
  * @brief Metodo que devuelve el ultimo dato elemento de la lista
  * @return Dato al final de la lista
+ * @throw std::invalid_argument Se lanza una excepcion si la lista esta vacia
  */
 template<typename L>
 L &ListaEnlazada<L>::final() {
@@ -188,6 +190,7 @@ void ListaEnlazada<L>::insertarFinal(L &dato) {
  * @param i Iterador
  * @param dato Dato del nodo a introducir
  * @post El metodo crea un nuevo nodo con un dato ya establecio, de forma que se coloca justo detras del nodo al que nos referimos con el iterador
+ * @throw Se lanza una excepcion si se intenta insertar un dato detras del final de la lista
  */
 template<typename L>
 void ListaEnlazada<L>::insertarDetras(Iterador<L> &i, L &dato) {
@@ -227,7 +230,7 @@ void ListaEnlazada<L>::insertar_delante(Iterador<L> &i, L &dato) {
 /**
  * @brief Metodo que elimina el primer nodo de la lista
  * @post El primer nodo de la lista es borrado, en caso de que solo hubiera 1 nodo, la cabecera y la cola apuntan al mismo nodo
- * @throw Se lanza una excepcion si se intenta eliminar un nodo de una lista vacia
+ * @throw std::invalid_argument Se lanza una excepcion si se intenta eliminar un nodo de una lista vacia
  */
 template<typename L>
 void ListaEnlazada<L>::borrarInicio(){
@@ -246,6 +249,7 @@ void ListaEnlazada<L>::borrarInicio(){
 /**
  * @brief Metodo que elimina el último nodo de la lista
  * @post El ultimo nodo de la lista es borrado, en caso de no haber nada cabecera y cola apuntan a 0
+ * @throw std::invalid_argument Se lanza una excepcion si se intenta eliminar un nodo de una lista vacia
  */
 template<typename L>
 void ListaEnlazada<L>::borrarFinal(){
@@ -270,6 +274,9 @@ void ListaEnlazada<L>::borrarFinal(){
  * @brief Metodo que dado un iterador, elimina el nodo
  * @param i Iterador
  * @post El metodo elimina un nodo indicado con el iterador, de forma que al ser este borrado, se reajusta la lista
+ * @throw std::invalid_argument Se lanza una excepcion si se intenta eliminar un nodo de una lista vacia
+ * @throw std::invalid_argument Se lanza una excepcion si se intenta borrar nullptr
+ * @throw std::invalid_argument Se lanza una excepcion si se intenta borrar un nodo invalido
  */
 template<typename L>
 void ListaEnlazada<L>::borrar(Iterador<L> &i) {
@@ -363,6 +370,7 @@ ListaEnlazada<L>::~ListaEnlazada() {
 /**
  * @brief Metodo que sirve para limpiar la lista
  * @post La lista queda limpia para un nuevo uso
+ * @throw std::invalid_argument Se lanza una excepcion si se intenta limpiar una lista que esta vacia
  */
 template<typename L>
 void ListaEnlazada<L>::limpia_lista() {
