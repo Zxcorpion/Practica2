@@ -13,7 +13,10 @@ void mostrarLista(ListaEnlazada<int> &l) {
     }
 }
 
-
+/**
+ * @author Pablo Rodríguez Gniadek prg00054@red.ujaen.es
+ * @author Marco Díaz Vera mdv00011@red.ujaen.es
+ */
 int main() {
     ListaEnlazada<int> listaEnteros;
     for (int i = 101; i <= 200; i++){
@@ -67,19 +70,24 @@ int main() {
     //Parte 2
     MediExpress mediexpress("../pa_medicamentos.csv","../lab2.csv");
     VDinamico<Laboratorio *> labsGranada =mediexpress.buscarLabCiudad("Granada");
+    std::cout<<"\n";
+    std::cout<<"Laboratorios de Granada: "<<std::endl;
     for (int i=0;i<labsGranada.tamlog_();i++) {
         std::cout<<labsGranada[i]->getNomrbeLab()<<" "<<std::endl;
     }
+    std::cout<<"\n";
     VDinamico<Laboratorio *> labsJaen =mediexpress.buscarLabCiudad("Jaén");
     std::cout<<"En Jaen hay "<<labsJaen.tamlog_()<<" laboratorios"<<std::endl;
     VDinamico<Laboratorio *> labsMadrid =mediexpress.buscarLabCiudad("Madrid");
-    std::cout<<"En Madrid hay "<<labsMadrid.tamlog_()<<" laboratorios y estos son: "<<std::endl;
+    std::cout<<"En Madrid hay "<<labsMadrid.tamlog_()<<" laboratorios y los 10 primeros son: "<<std::endl;
     for (int i=0;i<10;i++) {
         std::cout<<labsMadrid[i]->getNomrbeLab()<<" "<<std::endl;
     }
+    std::cout<<"\n";
     VDinamico<PaMedicamento*> labsAceite= mediexpress.buscaCompuesto("ACEITE");
+    std::cout<<"Los laboratorios cuyos principios activos poseen aceite son: "<<std::endl;
     for (int i = 0; i < labsAceite.tamlog_(); i++) {
-        std::cout<<"Los laboratorios cuyos principios activos poseen aceite son: "<<labsAceite[i]->getServe()->getNomrbeLab()<<" que tiene : "<<labsAceite[i]->get_nombre()<<std::endl;
+        std::cout<<labsAceite[i]->getServe()->getNomrbeLab()<<" que tiene : "<<labsAceite[i]->get_nombre()<<std::endl;
     }
     VDinamico<PaMedicamento*> labsSin = mediexpress.getMedicamentoSinLab();
     for (int i = 0; i < labsSin.tamlog_(); i++) {

@@ -154,8 +154,8 @@ MediExpress::MediExpress(const std::string &medicamentos, const std::string &lab
     int cont=0;
     for (int i=0; i<medication.tamlog_(); i++){
         if (medication[i].getServe())
-            std::cout << "PaMedicamento:" << medication[i].get_id_num()<<
-                "Labor.: " << medication[i].getServe()->getId() << std::endl;
+            std::cout << "ID del PaMedicamento: " << medication[i].get_id_num()<<
+                ", ID del Laboratorio asociado: " << medication[i].getServe()->getId() << std::endl;
         else
             cont++;
     }

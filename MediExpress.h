@@ -33,6 +33,7 @@ public:
     VDinamico<Laboratorio*> buscarLabCiudad(const std::string &nombreCiudad);
     VDinamico<PaMedicamento*> buscaCompuesto(const std::string &nombrePA);
     VDinamico<PaMedicamento*> getMedicamentoSinLab();
+    void borrarLaboratorio(const std::string &nombreCiudad);
 };
 
 
